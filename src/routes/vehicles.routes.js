@@ -20,7 +20,7 @@ router
   .get(vehiclesController.findOneVehicle)
   .patch(vehiclesController.updateVehicle)
 
-  router
+router
   .route('/:id/sales')
   .patch(vehiclesController.sellVehicle)
 
