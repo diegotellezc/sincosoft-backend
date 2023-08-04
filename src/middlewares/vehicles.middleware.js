@@ -62,6 +62,16 @@ exports.validVehicle = catchAsync(async(req, res, next) => {
     }
     
   } else if (condition === 'used' && price) {
+    const modelPriceInDB = await ModelPrices.findOne({
+      where: {
+        modelName: model
+      }
+    })
+
+    if(price < modelPriceInDB.price * 0.85 ){
+      return next(new AppError('The price of a used vehicle cannot be less than 85% of the price of a new one.'))
+    }
+
     if(type === 'car'){
       const car = await Vehicles.create({
         type,
