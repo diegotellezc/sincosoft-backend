@@ -104,3 +104,21 @@ exports.validVehicle = catchAsync(async(req, res, next) => {
     return next(new AppError('The condition of the vehicle must be "new" or "used".', 404))
   }
 })
+
+exports.validVehiclelExists = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const vehicle = await Vehicles.findOne({
+    where: {
+      vehicle_id: id,
+      status: 'active',
+    },
+  });
+
+  if (!vehicle) {
+    return next(new AppError(`The vehicle with id: ${id} was not found`, 404));
+  }
+
+  req.vehicle = vehicle;
+  next();
+});

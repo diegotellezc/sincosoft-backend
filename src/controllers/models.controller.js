@@ -1,4 +1,3 @@
-const Vehicles = require('../models/vehicles.model')
 const ModelPrices = require('../models/modelPrices.model')
 const catchAsync = require('../utils/catchAsync')
 
@@ -32,19 +31,34 @@ exports.createModel = catchAsync(async(req, res, next) => {
 })
 
 exports.findOneModel = catchAsync(async(req, res, next) => {
+  const { model } = req
+
   res.status(200).json({
-    status: 'success'
+    status: 'success',
+    model
   })
 })
 
 exports.updateModel = catchAsync(async(req, res, next) => {
+  const { model } = req
+  const { modelName, price } = req.body
+
+  const updatedModel = await model.update({modelName: modelName.toLowerCase(), price})
+
+
   res.status(200).json({
-    status: 'success'
+    status: 'success',
+    updatedModel
   })
 })
 
 exports.deleteModel = catchAsync(async(req, res, next) => {
+  const { model } = req
+
+  await model.update({status: 'disabled'})
+
   res.status(200).json({
-    status: 'success'
+    status: 'success',
+    message: "The model was disabled."
   })
 })

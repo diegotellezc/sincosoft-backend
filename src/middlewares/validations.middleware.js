@@ -24,9 +24,15 @@ exports.createVehicle = [
   validFields,
 ];
 
-exports.createModel = [
+exports.validModel = [
   body('modelName').notEmpty().withMessage('modelName cannot be empty'),
   body('price').notEmpty().withMessage('price cannot be empty'),
+  validFields,
+];
+
+exports.validBuyerData = [
+  body('buyerName').notEmpty().withMessage('buyerName cannot be empty'),
+  body('buyerDocument').notEmpty().withMessage('buyerDocument cannot be empty').isNumeric().withMessage('buyerDocument must be a number'),
   validFields,
 ];
 

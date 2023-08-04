@@ -15,9 +15,13 @@ router
 
 
 router
+  .use('/:id', vehiclesMiddleware.validVehiclelExists)
   .route('/:id')
   .get(vehiclesController.findOneVehicle)
   .patch(vehiclesController.updateVehicle)
-  .delete(vehiclesController.sellVehicle);
+
+  router
+  .route('/:id/sales')
+  .patch(vehiclesController.sellVehicle)
 
 module.exports = router;
